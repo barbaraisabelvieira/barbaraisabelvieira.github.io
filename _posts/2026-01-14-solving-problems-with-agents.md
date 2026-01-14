@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Scaling Up Automation with Agents: Lessons Learned"
-author: barbaraisabelvieira
+author: Bárbara Vieira
 ---
 
 > **Disclaimer:** I'm a security engineer, not a software developer. I have little to no background in data science, but I'm using AI as a tool to solve security problems. While all examples here use AWS infrastructure, these principles apply to other platforms too.
