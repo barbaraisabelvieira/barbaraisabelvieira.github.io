@@ -489,3 +489,7 @@ If you're working on similar challenges or have questions about agent developmen
 - [Strands Agents Documentation](https://strandsagents.com/)
 - [Amazon Bedrock](https://aws.amazon.com/bedrock/)
 - [Kiro CLI](https://kiro.dev/cli/)
+
+
+## Acknowledgements
+I'd like to thank my colleagues Yakov Shafranovich and Max Rattray for the fruitful feedback during the review of this post.
