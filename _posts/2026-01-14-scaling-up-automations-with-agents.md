@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Scaling Up Automation with Agents: Lessons Learned"
+title: "Scaling Up Automations with Agents: Lessons Learned"
 author: Bárbara Vieira
 ---
 
@@ -10,9 +10,9 @@ author: Bárbara Vieira
 
 During the past months, I've focused on automating security test coverage at scale. While this is an extremely hard problem to automate, given it's importance, I decided it was worth trying.
 
-One of the tools I used was AI agents. I started with proof-of-concepts using general-purpose AI CLIs like Kiro-CLI and Cline, then moved to developing my own agents. While I hit many walls, I learned a lot from this experience.
+One of the tools I used was *AI Agents*. I started with proof-of-concepts using general-purpose AI CLIs like Kiro-CLI and Cline, then moved to developing my own agents. While I hit many walls, I learned a lot from this experience.
 
-Through this journey, I discovered six critical lessons about automation with AI agents:
+Through this journey, I identified six fundamental principles about developing automations with AI agents:
 
 1. **Break down the problem into small steps**
 2. **Be frugal when using agents**
@@ -21,7 +21,7 @@ Through this journey, I discovered six critical lessons about automation with AI
 5. **Break down the inputs**
 6. **Structure your outputs**
 
-This blog post shares some of the lessons (or principles) I have learned. The examples presented in this blog are written in Python and rely on the Strands Agents framework. 
+This blog post shares some of the lessons I have learned. The examples presented here are written in Python and rely on the Strands Agents framework. 
 
 ## Background
 This section introduces some basic terminology and frameworks used throughout the post. If you're familiar with them, feel free to jump to the next section.
@@ -35,11 +35,12 @@ Strands makes agent development easier, provides the right level of abstraction,
 
 ### Model Context Protocol (MCP)
 
-[Model Context Protocol (MCP)](https://en.wikipedia.org/wiki/Model_Context_Protocol) is an open standard for connecting large language models (LLMs) to external data and tools, enabling AI agents to access real-time info and perform actions. It was introduced at the end 2024 by Anthropic, with an exponential growth implementations throughout 2025 and beyond. 
+[Model Context Protocol (MCP)](https://en.wikipedia.org/wiki/Model_Context_Protocol) is an open standard for connecting large language models (LLMs) to external data and tools, enabling AI agents to access real-time info and perform actions. It was introduced at the end 2024 by Anthropic, with an exponential growth in implementations throughout 2025 and beyond. Tool-based integration is the standard approach for connecting MCP servers to agents.
+
 
 ### Tools 
 
-Tools are the primary mechanism for extending agent capabilities beyond text generation. They enable agents to interact with external systems, access real-time data, execute code, manipulate files, and perform actions in their environment. Tools enable agents to perform powerful automations, with complex workflows, API integrations, and multi-step problem solving. Strands Agents natively supports off-the-shelve [tools](https://strandsagents.com/latest/documentation/docs/user-guide/concepts/tools/), as well, the capability of creating custom ones.
+Tools are the primary mechanism for extending agent capabilities beyond text generation. They enable agents to interact with external systems, access real-time data, execute code, manipulate files, and perform actions in their environment. Tools enable agents to perform powerful automations, with complex workflows, API integrations, and multi-step problem solving. Strands Agents natively supports off-the-shelve [tools](https://strandsagents.com/latest/documentation/docs/user-guide/concepts/tools/), as well as, the capability of creating custom ones.
 
 
 ## Principles for Scaling Up Automation with Agents 
@@ -125,9 +126,10 @@ def main(repo_path):
             })
 ```
 
-The full implementation script (and all other examples related to code snippets presented in other lessons) can be found in this [Github repository](https://github.com/barbaraisabelvieira/scaling-up-automations-with-agents-examples). 
+It will become more evident in the remaining lessons of this post why this pattern is so important. For now, just keep in mind that breaking down the problems into small steps improves reliability and consistency of the outputs, and provides better modularity and separation of concerns of the implementations.
 
-> Please note these are just simple illustrative examples and are not meant for production use.
+
+> The full implementation and all other examples presented throughout this post can be found in this [Github repository](https://github.com/barbaraisabelvieira/scaling-up-automations-with-agents-examples). Please note these are just simple illustrative examples and are not meant for production use.
 
 ### 2. Be Frugal When Using Agents
 
@@ -138,9 +140,8 @@ Use agents only when there's no deterministic alternative. This is primarily due
 - **Reliability:** Agents introduce non-determinism in outputs
 - **Cost:** AI inference is expensive and often unnecessary
 
-For example, I could have used an agent for all tasks in the previous example (see the prompt below). But I would immediately face issues like token limitations and poor control over LLM workflow execution.
+For example, I could have used an agent for all tasks in the previous example (see the prompt below). But I would immediately face issues like token limitations, context overflow and poor control over LLM workflow execution.
 
-The following prompt encodes all the steps described in a **Lesson 1** in a single prompt. Let's call this approach of solving the test extraction problem, *Agent-only prompt*.
 
 ```markdown
 
@@ -191,7 +192,10 @@ Purpose: Tests [specific functionality]
 Execute this process for the repository path provided by the user.
 ```
 
-What happens when we execute the script of **Lesson 1** and this Agent-Only prompt in the same source code repository?
+This prompt encodes all the steps described in a **Lesson 1** in a single prompt. Let's call this approach of solving the test extraction problem, *Agent-only prompt*.
+
+
+What happens when we execute the script of **Lesson 1** and this *Agent-Only prompt* in the same source code repository? Let's look into the outputs:
 
 **Structured Script (Lesson 1):**
 - Repository: 122 Java files
@@ -201,10 +205,9 @@ What happens when we execute the script of **Lesson 1** and this Agent-Only prom
 - Repository: 122 Java files  
 - Tests identified: 213 individual test methods
 
-The agent-only approach missed nearly half the tests due to context management problems. This demonstrates why an agents-first approach isn't reliable for task automation.
+Essentially, the agent-only approach missed nearly half the tests due to context management problems. 
 
-
-**What's the main difference?** While the structured script only uses agents to infer what the test is doing, the example shown in this lesson uses an agent to perform all 4 steps of the analysis. 
+**Why does this happen?** While the structured script only uses agents to infer what the test is doing, the example shown in this lesson uses an agent to perform all 4 steps of the analysis. 
 
 More specifically, the following code snippet (**Lesson 1**) shows that the agent is iteratively called for each test method to analyze what is being tested. While in the Agent-only prompt, the agent will perform an autonomous decision on the tests to extract based of the resources available.
 
@@ -219,19 +222,21 @@ for method_line in test_methods[:3]:  # Limit to first 3 for demo
     })
 ```
 
+This demonstrates why breaking down the problem into small steps (**Lesson 1**) and using agents only where they are required (**Lesson 2**) is preferable when automating tasks.
+
 ### 3. With Tools, Less is More
 
 Agents use tools to connect with external resources and perform actions. These tools give agents incredible powers, but empowering an agent to do anything is dangerous and unreliable. 
 
-While modern agent frameworks include safety mechanisms, tool validation, and execution controls, agents outputs are still non-deterministic. Thus, enabling too many tools leads to inconsistencies and issues during task automation.
+While modern agent frameworks include safety mechanisms, tool validation and execution controls, agents outputs are still non-deterministic. Thus, enabling too many tools may lead to inconsistencies and issues during task automation.
 
 **Example: Implementing custom tools**
 
 As an example, consider the prompt from **Lesson 2** (Agent-only prompt). Let's create a Strands Agent for this prompt that enables the following tools: 
 
-- `file_read`: use to enable the agent to read the repository files
-- `file_write`: use to enable the agent to write the outputs to a file
-- `shell`: used to execute all shell commands
+- `file_read`: enables the agent to read the repository files
+- `file_write`: enables the agent to write the outputs to a file
+- `shell`: used by the agent to execute all shell commands
 
 ```python
 def create_test_extraction_agent():
@@ -298,7 +303,7 @@ You have access to shell, file_read, and file_write tools to complete this task.
     return agent
 ```
 
-While enabling the `shell` tool appears straightforward, it introduces significant security risks by allowing the agent to perform unauthorized actions like deleting files. Instead we can create specific, constrained tools:
+While enabling the `shell` tool appears straightforward, it introduces significant security risks by allowing the agent to perform unauthorized actions like deleting files. Instead we can create specific, constrained tools that restrict what an agent can do during runtime.
 
 ```python
 @tool
@@ -335,7 +340,7 @@ def find_files(path: str, name_pattern: str = "*.java") -> str:
         return f"Error: {str(e)}"
 ```
 
-The agent initialization code now uses these tools instead of the `shell` tool.
+`find_files` and `grep_pattern` are custom tools that work as a wrapper around the `find` and `grep` command respectively. The agent initialization code now uses these tools instead of the `shell` tool.
 
 ```python
     # Create agent with custom and file tools
@@ -346,11 +351,13 @@ The agent initialization code now uses these tools instead of the `shell` tool.
     """
 ```
 
-This approach is more secure and delivers better, more consistent results.
+This approach is more secure and delivers better and more consistent results. 
+
+>  This pattern also improves modularity and long-term maintainability of the code. By encapsulating shell commands, MCP tools, and other operations within custom tools, you can easily swap out underlying implementations or MCP servers as needed.
 
 ### 4. Smaller Models, Doesn't Mean Worse Outputs
 
-This is the era of **Large** Language Models, but when comes to automation, bigger isn't always better. Everything depends on the task at hand.
+This is the era of **Large** Language Models, but when it comes to automation, bigger isn't always better. Everything depends on the task at hand.
 
 Models with smaller number of parameters (or smaller models in short), often perform much better with focused tasks. For small tasks like inferring what code does, larger models tend to:
 
@@ -364,7 +371,7 @@ While larger models often provide better reasoning and more nuanced understandin
 
 I extended the script from **Lesson 1** to compare execution times between Amazon Nova Lite (smaller model) and Amazon Nova Pro (model with a larger number of parameters). The script is available in the same [GitHub repository](https://github.com/barbaraisabelvieira/scaling-up-automations-with-agents-examples).
 
-The results where the following:
+The results were the following ones:
 ```markdown
 ===============================
 MODEL COMPARISON SUMMARY
@@ -376,13 +383,16 @@ Speed difference: 8.44s
 ```
 Nova Lite completes the task in roughly half the time while producing comparable output quality to Nova Pro.
 
+> Note that, I'm not dismissing larger models. Larger models are extremely useful. However, today, smaller models tend to be more effective for small, targeted tasks.
+
 ### 5. Break Down the Inputs
 
-After 50+ messages, agents don't "recall" early conversation details. If you ask an agent to process large inputs at once, it will "prioritize" - and this priority can be random, leading to inconsistent results. Also,  LLMs have token limits, so iterating over smaller inputs yields more reliable outcomes. This is true even in modern agent frameworks that include memory systems, summarization, and context compression.
+After 50+ messages, agents don't "recall" early conversation details. If you ask an agent to process large inputs at once, it will "prioritize" - and this priority can be random, leading to inconsistent results. So break down not just the steps (**Lesson 1**), but also the inputs. Managing the context window is fundamental, since agents' context is finite.
 
-So break down not just the steps (aka **Lesson 1**), but also the inputs. Managing the context window is fundamental, since agents' context is finite.
+Also,  LLMs have token limits, so iterating over smaller inputs yields more reliable outcomes. This is true even in modern agent frameworks that include memory systems, summarization, and context compression.
 
-This is better demonstrated in the example from **Lesson 2** where we compare the results of the structured script (**Lesson 1**) and the agent-only prompt (**Lesson 2**).
+
+To better demonstrate this principle, let's consider the comparison done in **Lesson 2**: structured script (**Lesson 1**) vs the agent-only prompt (**Lesson 2**).
 
 - **Structured script (Lesson 1):** In the example of Lesson 1, the script deterministically identifies all test files and lines of code first, and then agent iterates over each individual test methods.
 
@@ -417,17 +427,17 @@ The results, (as already shown in **Lesson 2**) differ significantly: 419 tests 
 
 The structured script identifies all tests systematically, while the agent-only approach lets the agent choose which tests to extract. This gap occurs because in the agent-only approach, the agent manages too much context, leading to inconsistent outputs.
 
-This demonstrates why breaking down agent analysis across different inputs matters. It provides better output control and introduces consistency in automation workflows.
+So breaking down agent analysis across different inputs matters. It provides better output control and introduces consistency in automation workflows.
 
 ### 6. Structure Your Outputs
 
-Structured outputs are a blessing. Any structured output can be validated, thus introducing consistency. As a security engineer, I can't emphasize enough the importance of input validation and output sanitization.
+Structured outputs are a blessing. Any structured output can be validated, which enables better consistency. As a security engineer, I can't emphasize enough the importance of validating LLM-based outputs.
 
-The unpredictability of the agents' output isn't good for task automation. While these don't eliminate non-determinism entirely, structured outputs help make output more deterministic and predictable. Strands offers structure outputs out-of-the-box through Pydantic models.
+The unpredictability of the agents' output isn't good for task automation. While these don't eliminate non-determinism entirely, structured outputs help make outputs more deterministic and predictable. Strands offers structure outputs out-of-the-box through Pydantic models.
 
 **Example: Structured Outputs**
 
-This example shows to use Strands structured outputs in more detail. The following code snippet, shows how the Pydantic model can be used when calling a Strands Agent to generated a structure output.
+This example shows the use of Strands structured outputs in more detail. The following code snippet, shows how the Pydantic model can be used when calling a Strands Agent to generate a structure output.
 
 ```python
 # Use agent to analyze test purpose with structured output
@@ -452,27 +462,28 @@ This example shows to use Strands structured outputs in more detail. The followi
 ```
 
 Because the output is now an object `TestPurpose`, it's easier to validate its structure and persist data for further analysis.
+This pattern is especially valuable for automations that depend on agent workflows. Validating individual agent structured outputs during execution prevents unexpected workflow failures.
 
 ## Conclusions
 
-After months of working with AI agents for security automation, these six lessons have proven invaluable:
+After months of working with AI agents for security automation, these six lessons have proven invaluable. To recap:
 
 1. **Break problems into small, manageable steps** - Start by breaking down your problem into small tasks
 2. **Be frugal with agents** - Most tasks don't need AI
 3. **Limit agent tools** - Fewer, focused tools yield better results
 4. **Choose appropriate model sizes** - Models with small number of parameters often work better for focused tasks
 5. **Manage input size** - Break large inputs into smaller chunks and iterate over them
-6. **Structure outputs** - Validation and consistency are crucial for reliable results
+6. **Structure the outputs** - Validation and consistency are crucial for reliable results
 
 The key insight? **Agents should automate processes you already understand, not figure out the automation process for you.** They're powerful tools for scaling manual work, but they're not magic problem-solvers. This might change in the future as modern agents (2026) show significantly better consistency than earlier versions. But predicting the future development of agents and similar systems remains uncertain.
 
-Nevertheless, today, if you're exploring AI automation in your domain, start small, be methodical, and remember: the goal isn't to use AI everywhere, but to use it effectively where it adds real value.
+Nevertheless, today, if you're exploring AI automation in your domain, start small, be methodical, and remember: **the goal isn't to use AI everywhere, but to use it effectively where it adds real value.**
 
 
 ---
 
 
-**What's next?** I'll be sharing more details about automating security test coverage in upcoming posts. If you're working on similar challenges or have questions about agent development, I'd love to hear about your experiences.
+If you're working on similar challenges or have questions about agent development, I'd love to hear about your experiences.
 
 **Resources:**
 - [Strands Agents Documentation](https://strandsagents.com/)
