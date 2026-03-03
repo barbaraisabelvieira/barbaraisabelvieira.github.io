@@ -1,11 +1,8 @@
 ---
+layout: post
 title: "Agent-first Secure Software Development Lifecycle"
-date: 2026-03-01
-description: "How AI agents are transforming secure software development today."
-tags: ["security", "ai", "agents", "sdlc", "devsecops", "automation"]
+author: Bárbara Vieira
 ---
-
-# Agent-first Secure Software Development Lifecycle 
 
 Agent-first development is a software development approach where autonomous AI agents plan, write, test, and modify code with minimal human intervention. As a security engineer who's spent years watching development teams wait on security reviews, this shift both excites and concerns me.
 
@@ -17,12 +14,12 @@ Code iterates so rapidly that threats and security requirements are outdated bef
 This blog post gives an introduction of this fundamental shift in how security should integrate into software development. I hope this inspires you to rethink how we build secure software today.
 
 
-## Motivation
+## Introduction
 
 Agent-first software development is here to stay. I could list a bunch of references on this topic. But I think the most relevant one is the Anthropic's recent report on [Agentic Coding Trends](https://resources.anthropic.com/hubfs/2026%20Agentic%20Coding%20Trends%20Report.pdf) which describes how coding agents are reshaping software development. The traditional Software Development Lifecycle (SDLC) to deliver new products or features has shifted from weeks to minutes. This means that we also need to re-think how to implement secure software development practices. 
 
 
-## The Problem: Security Is Slow (And We Know It)
+### The Problem: Security Is Slow (And We Know It)
 
 Let's be honest, the current approach to secure software development is slow:
 
@@ -39,7 +36,7 @@ Let's be honest, the current approach to secure software development is slow:
 
 For years, we've accepted this as the necessary cost of security. The problem is that this approach doesn't align with agent-first software development practices. At this point, our options are limited: we must adapt how we operationalize security and secure development. We have no options. 
 
-## The Solution: Agents That Actually Understand Security
+### The Solution: Agents That Actually Understand Security
 
 The agent-first approach uses specialized AI agents to automate comprehensive and time-consuming development tasks. Security is simply a non-functional requirement among many, so applying these principles to the secure software development is a natural logical extension.
 
@@ -65,12 +62,14 @@ The shift isn't in the security approach itself, it's in how we operationalize i
 
 The following sections outline agent-first secure software development steps, specifically targeting application security and velocity of the software development teams. Highly specialized tasks like manual penetration testing or security operations (often carried out by independent teams) are out of scope of this post.
 
+---
+---
 
 ## The Agent-first Secure SDLC Workflow
 
 Let me walk you through how *Agent-first Secure SDLC* works. The workflow is organized into three main phases, each supported by specialized agents. The focus is on velocity, consistency, comprehensiveness and full traceability.
 
-![agent-first approach Workflow](../images/agent-first-secure-development/Agentic_SSDLC.png)
+![]({{ site.baseurl}}/images/agent-first-secure-development/Agentic_SSDLC.png){: height="650px" with="650px"}
 
 ### What This Process Delivers
 
@@ -245,6 +244,8 @@ The last phase covers:
 
 This continuous feedback loop ensures security doesn't end at deployment—it evolves with your system in production.
 
+--- 
+
 ## Real-World Impact
 
 The real transformation isn't just about speed—it's about enabling short feedback loops and fast iterations. Requirements and threat models become living documents that constantly evolve as your system gets updated, rather than static artifacts that become outdated the moment they're written.
@@ -257,7 +258,7 @@ Critically, all these artifacts live next to your code—they're version control
 
 The overall impact is that implementation of secure software goes from weeks to hours. The key difference: you're not just faster at creating artifacts once—you can iterate on code, requirements, and threat models continuously without the traditional multi-day lag between changes and security validation. Security documentation stays current with your codebase instead of becoming obsolete.
 
-## What This Means for Different Roles
+### What This Means for Different Roles
 
 **For Developers**: Security becomes an enabler, not a blocker. You get immediate feedback, comprehensive test coverage, and clear requirements. You can iterate rapidly without waiting for security reviews.
 
@@ -266,7 +267,7 @@ The overall impact is that implementation of secure software goes from weeks to 
 **For Engineering Managers**: Faster delivery without compromising security. Better traceability and compliance. Reduced security debt. Happier teams.
 
 
-## The Human-Agent Partnership
+### The Human-Agent Partnership
 
 Let me emphasize this again: agents don't replace us, they augment us.
 
@@ -287,6 +288,9 @@ Let me emphasize this again: agents don't replace us, they augment us.
 The key is leveraging each for what they do best. Agents handle the comprehensive, repetitive work. Humans focus on judgment, creativity, and critical decisions.
 
 **Human Validation is Non-Negotiable**: While agents accelerate the process, humans must validate every step. Every line of code, every security requirement, every threat model entry submitted to the repository should be reviewed by a human. Someone must be accountable for what goes into production. Agents are powerful assistants, but they don't replace human responsibility and oversight. The speed gains come from agents doing the heavy lifting, not from skipping validation.
+
+---
+---
 
 ## Getting Started
 
@@ -422,9 +426,12 @@ Track:
 - Artifact freshness (how often security docs stay current)
 
 
-> This proof-of-concept shows how agent-first secure development works in practice. Real organizations will centralize security agents, skills, knowledge bases, and standards under dedicated teams who build specialized tooling and validation workflows. Centralized observability with comprehensive logging and metrics become essential. But here's what shouldn't change: the developer experience. Security engineers shouldn't create processes that disrupt how builders naturally work. We need to make implementing and testing security controls easier, not add friction.   
+> This proof-of-concept shows how agent-first secure development works in practice. Real organizations will centralize security agents, skills, knowledge bases, and standards under dedicated teams who build specialized tooling and validation workflows. Centralized observability with comprehensive logging and metrics become essential. But here's what shouldn't change: the developer experience. Security engineers should avoid creating processes that disrupt how builders naturally work. We need to make implementing and testing security controls easier, not add friction.   
 
-## Conclusion
+---
+---
+
+## Conclusions
 
 Agent-first development represents a fundamental shift in how software gets built. Agent-first *secure* development adapts security practices to this reality. Agents handle comprehensive analysis and artifact generation. Humans focus on strategic decisions, risk assessment, and validation. The result is faster delivery, better security, and teams that can actually keep pace with modern development velocity.
 
@@ -432,17 +439,14 @@ This post doesn't introduce any novel security process or mechanism. Instead, it
 
 Start small, iterate rapidly, and see for yourself how agents can transform secure development. I hope this inspires you to try it.
 
----
+*Have you tried using AI agents for security workflows? What challenges are you facing with traditional secure development? I'd love to hear your thoughts and experiences.*
+
+***
+*** 
 
 ## Small Reflection
 
 Writing this post feels strange. A year ago, I would have dismissed agent-first security as hype. I had reservations (still do), about delegating security tasks to AI. But the reality is more nuanced. Agents don't make security decisions; they accelerate the grunt work so humans can focus on decisions that actually matter. The question is no longer whether to adopt agent-first approaches, but how to implement them responsibly and effectively. 
-
-
----
-
-
-*Have you tried using AI agents for security workflows? What challenges are you facing with traditional secure development? I'd love to hear your thoughts and experiences.*
 
 ---
 
