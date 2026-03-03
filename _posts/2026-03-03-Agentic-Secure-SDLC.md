@@ -151,7 +151,7 @@ Every requirement is mapped to standards, policies and security frameworks. *You
 
 The agent generates a comprehensive threat model by analyzing your design and requirements. What makes this powerful is the flexibility and continuous nature of the approach:
 
-**Adaptive Methodology**: The agent applies the most appropriate threat modeling methodology for your system—STRIDE for data flow analysis, PASTA for risk-centric assessment, attack trees for detailed threat decomposition, or Systems-Theoretic Process Analysis (STPA) for hazard analysis. It adapts based on your system's characteristics.
+**Adaptive Methodology**: The agent applies the most appropriate threat modeling methodology for your system. E.g.: STRIDE for data flow analysis, PASTA for risk-centric assessment, attack trees for detailed threat decomposition, or Systems-Theoretic Process Analysis (STPA) for hazard analysis, etc. It adapts based on your system's characteristics.
 
 **Knowledge-Based Analysis**: The agent leverages existing threat catalogs and historical security issues to identify risks. It learns from previous incidents, known vulnerabilities, and industry-specific threats, bringing institutional knowledge to every analysis.
 
@@ -167,7 +167,8 @@ The agent's analysis includes:
 
  *You review it, provide feedback, and the agent refines it*. This happens in minutes and remains continuously up-to-date.
 
-Like the previous step, the primary output of threat modeling is the set of mitigations that must be implemented. Some threats may be risk-accepted through a parallel decision process, but for those requiring mitigation, technical or organizational controls must be established and integrated into your implementation.
+Note that threat modeling is just a means to an end. The primary output of threat modeling is the set of security controls (aka mitigations) to be implemented. 
+> Some threats may be risk-accepted through a parallel decision process, but for those requiring mitigation, technical or organizational controls must be established and integrated into your implementation.
 
 #### Step 6: Test Objectives (Agent-Generated)
 
