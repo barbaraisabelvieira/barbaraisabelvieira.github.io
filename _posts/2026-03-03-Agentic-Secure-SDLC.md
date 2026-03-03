@@ -79,7 +79,7 @@ Two principles keep this practical:
 1. **Maintain abstraction**: Development teams and agents get clear, actionable guidance without unnecessary detail
 2. **Agent quality matters**: Well-calibrated agents deliver correct, accurate output that teams can trust
 
-The security-related tasks (marked yellow in the diagram) can now be operationalized in minutes rather than weeks. Let's see how.
+The security-related tasks can now be operationalized in minutes rather than weeks. Let's see how.
 
 
 ### Phase 1: Design (Steps 1-3)
@@ -94,7 +94,7 @@ Agent-first development starts with an intent. Software developers express their
 
 Agents derive specifications that are version-controlled documents describing system goals, user stories, and requirements. *You review it, provide feedback, and the agent refines it*, until your satisfied with the output.
 
-Spec-driven development is the approach followed by [Kiro](https://kiro.dev/), but can naturally be extended to other coding agents or platforms. You can learn more about this approach in [Kiro and the future of AI spec-driven software development](https://kiro.dev/blog/kiro-and-the-future-of-software-development/).
+> Spec-driven development is the approach followed by [Kiro](https://kiro.dev/), but can naturally be extended to other coding agents or platforms. You can learn more about this approach in [Kiro and the future of AI spec-driven software development](https://kiro.dev/blog/kiro-and-the-future-of-software-development/).
 
 
 #### Step 2: System Design (Agent-Generated)
@@ -159,10 +159,10 @@ The agent generates a comprehensive threat model by analyzing your design and re
 
 The agent's analysis includes:
 
-- Identifies potential threats and threat actors
-- Analyzes attack vectors and vulnerabilities
-- Assesses likelihood and impact based on historical data
-- Maps mitigations to threats
+- Potential threats and threat actors
+- Attack vectors and vulnerabilities
+- Likelihood and impact based on historical data
+- Mitigations to threats (aka security controls)
 - Tracks threat evolution over time
 
  *You review it, provide feedback, and the agent refines it*. This happens in minutes and remains continuously up-to-date.
@@ -172,7 +172,7 @@ Note that threat modeling is just a means to an end. The primary output of threa
 
 #### Step 6: Test Objectives (Agent-Generated)
 
-Validating security controls from the threat model or security requirements is mandatory. Test-driven secure development becomes easy and mostly cheap to implement in agent-first development. The agent can generate comprehensive test objectives for all the security controls that your service must implement.
+Validating security controls from the threat model or security requirements is mandatory. **Test-driven secure development** becomes easy and mostly cheap to implement in agent-first development. The agent can generate comprehensive test objectives for all the security controls that your service must implement.
 
 **Adaptive Abstraction Levels**: Test objectives can range from high-level specifications to very detailed test descriptions, depending on the threat and mitigation's level of abstraction. For architectural threats like "decentralized authorization," you get high-level test objectives about authorization consistency. For specific vulnerabilities like "SQL injection in user input," you get detailed test cases with exact payloads and assertions.
 
@@ -243,8 +243,7 @@ The last phase covers:
   - Automated security remediation & rollbacks
 - **Security Monitoring & Operations**: Agent-assisted continuous monitoring with proactive threat detection and remediation
 
-This continuous feedback loop ensures security doesn't end at deployment—it evolves with your system in production.
-
+This ongoing feedback cycle keeps security active beyond deployment—adapting as your production system evolves and providing insights to refine future iterations.
 --- 
 
 ## Real-World Impact
@@ -295,7 +294,7 @@ The key is leveraging each for what they do best. Agents handle the comprehensiv
 
 ## Getting Started
 
-If you're interested in trying the agent-first secure SDLC approach, here's how to create a proof-of-concept using [Kiro](https://kiro.dev/). This approach extends to any agentic development environment.
+If you're interested in trying the agent-first secure SDLC approach, here's how to create a proof-of-concept using [Kiro](https://kiro.dev/). Note that this approach extends to any agentic development environment.
 
 > Kiro is an agentic, AI-native IDE built by AWS to accelerate software development from prototype to production.
 
@@ -373,7 +372,7 @@ Start with a new feature or service. Don't try to transform everything at once.
 
 ### 4. Create a Structured Specification
 
-Use Kiro's Specs to formalize your feature:
+Write your high-level specification (aka intent). Use Kiro's Specs to formalize your feature:
 - **Requirements**: User stories and acceptance criteria
 - **Design**: Architecture, data flows, and integration points
 - **Tasks**: Discrete implementation steps
@@ -385,8 +384,8 @@ This structured approach captures security considerations from the start.
 With skills and specialized agents configured, simply ask Kiro:
 
 ```
-> Review this design for security anti-patterns
-[skill: security-design-review activated]
+> kiro-cli --agent security-architect
+> "Review this design for security anti-patterns"
 
 > Generate security requirements based on OWASP ASVS
 [skill: security-requirements activated]
@@ -452,3 +451,6 @@ Writing this post feels strange. A year ago, I would have dismissed agent-first 
 ---
 
 ## Acknowledgements 
+
+I’d like to thank my colleague Matt Goldberg for kindly reviewing this post.
+
