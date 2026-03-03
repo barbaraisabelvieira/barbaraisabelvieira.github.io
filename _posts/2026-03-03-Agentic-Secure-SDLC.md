@@ -452,5 +452,4 @@ Writing this post feels strange. A year ago, I would have dismissed agent-first 
 
 ## Acknowledgements 
 
-I’d like to thank my colleague Matt Goldberg for kindly reviewing this post.
-
+I’d like to thank my colleague Matt Goldberg for kindly reviewing this blog post.
