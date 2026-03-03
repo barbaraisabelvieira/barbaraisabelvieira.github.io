@@ -193,7 +193,7 @@ Now you implement the actual system, but you're not starting from scratch. You h
 
 **Threat Model as Design Constraint**: The threat model from Step 5 informs your architectural decisions. You know the threats, attack vectors, and required mitigations. You implement defense-in-depth knowing exactly what you're defending against.
 
-**Test Objectives as Acceptance Criteria**: The test objectives from Step 6 define what "done" means. Your implementation must pass these tests. This is test-driven security development—tests exist before implementation, guiding what you build.
+**Test Objectives as Acceptance Criteria**: The test objectives from Step 6 define what "done" means. Your implementation must pass these tests. This is **test-driven security development** — tests exist before implementation, guiding what you build.
 
 **Agent-Assisted Coding**: As you write code, agents provide real-time guidance:
 - Suggest secure coding patterns based on requirements
