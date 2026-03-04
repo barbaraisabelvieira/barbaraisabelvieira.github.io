@@ -448,8 +448,7 @@ Start small, iterate rapidly, and see for yourself how agents can transform secu
 
 Writing this post feels strange. A year ago, I would have dismissed agent-first security as hype. I had reservations (still do), about delegating security tasks to AI. But the reality is more nuanced. Agents don't make security decisions; they accelerate the grunt work so humans can focus on decisions that actually matter. The question is no longer whether to adopt agent-first approaches, but how to implement them responsibly and effectively.
 
-This blog post introduces one, of possibly many approaches to **today's** agent-first development process - not the definitive answer.  The landscape is evolving rapidly, and what works today may 
-transform entirely in the coming years.
+This blog post introduces one of possibly many approaches to **today's** agent-first development process - not the definitive answer.  The landscape is evolving rapidly, and what works today may transform entirely in the coming years.
 
 ---
 
